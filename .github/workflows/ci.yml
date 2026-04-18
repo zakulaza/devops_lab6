@@ -26,7 +26,5 @@ jobs:
 
     - name: Run tests
       run: |
-        # Створюємо фейковий тест, якщо папки з тестами немає, щоб pytest не падав
-        mkdir -p tests
-        echo "def test_pass(): assert True" > tests/test_simple.py
-        pytest
+        # Додаємо команду python -m перед pytest
+        python -m pytest
