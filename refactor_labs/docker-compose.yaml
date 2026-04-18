@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: restaurant_api
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://root:example@db:27017/
+      - DB_NAME=restaurant_db
+      - ENVIRONMENT=production
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: mongo:latest
+    container_name: mongodb_server
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
